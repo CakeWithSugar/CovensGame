@@ -1,0 +1,4 @@
+name: CovensGame
+version: '1.0'
+main: org.cws.covensGame.CovensGame
+api-version: '1.21'
