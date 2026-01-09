@@ -61,6 +61,7 @@ public class CastManager {
             projectile = player.launchProjectile(Arrow.class);
         } else {
             projectile = player.launchProjectile(Snowball.class);
+            projectile.setVisibleByDefault(false);
         }
         projectile.setVelocity(direction);
         projectile.setGravity(gravity);
@@ -101,7 +102,6 @@ public class CastManager {
     }
 
     private void setTrail(Projectile projectile, List<Particle> particle){
-        projectile.setVisibleByDefault(false);
         Bukkit.getScheduler().runTaskTimer(instance, () -> {
             if (projectile.isDead()) {
                 return;
