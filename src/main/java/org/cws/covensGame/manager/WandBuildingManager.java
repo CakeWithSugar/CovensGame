@@ -12,13 +12,14 @@ import java.util.List;
 public class WandBuildingManager {
     CovensGame instance = CovensGame.getInstance();
 
-    public ItemStack getWand(Material wandType, List<Particle> particles) {
+    public ItemStack getWand(Material wandType, List<Particle> particles, int reqExp) {
         ItemStack item = new ItemStack(wandType);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.setDisplayName("§eTeststab");
             List<String> lore = new ArrayList<>();
             lore.add(instance.values.particleNotation + particles.toString());
+            lore.add(instance.values.expRequieredNotation + reqExp);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }

@@ -4,6 +4,7 @@ import org.bukkit.Particle;
 
 public class BaseValues {
     public String particleNotation = "§aPartikel: §7";
-    public Particle basicParticle = Particle.FIREWORK;
+    public String expRequieredNotation = "§aLevel benötigt: §7";
 
+    public Particle basicParticle = Particle.FIREWORK;
 }

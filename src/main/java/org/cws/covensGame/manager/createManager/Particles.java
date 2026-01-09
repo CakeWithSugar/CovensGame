@@ -24,7 +24,7 @@ public class Particles {
 
         inventory.setItem(10,instance.wandBuildingManager.createActivationItem(Material.FIREWORK_ROCKET,"§eFeuerwerk"));
         inventory.setItem(11,instance.wandBuildingManager.createActivationItem(Material.FIRE_CHARGE,"§eFlammen"));
-        inventory.setItem(12,instance.wandBuildingManager.createActivationItem(Material.BUCKET,"§eWässrig"));
+        inventory.setItem(12,instance.wandBuildingManager.createActivationItem(Material.WATER_BUCKET,"§eWässrig"));
         inventory.setItem(13,instance.wandBuildingManager.createActivationItem(Material.EMERALD,"§eGlizernd grün"));
         inventory.setItem(14,instance.wandBuildingManager.createActivationItem(Material.POWDER_SNOW_BUCKET,"§eSchnee"));
     }
@@ -38,11 +38,10 @@ public class Particles {
     public void clickManager(int slot,Inventory inventory,Player player) {
         if (slot == 4) {
             player.closeInventory();
-            instance.variables.clearForPlayer(player);
             return;
         }
         if (slot == 10) {
-            change(player,Particle.FIREWORK);
+            change(player, Particle.FIREWORK);
         }
         if (slot == 11) {
             change(player,Particle.FLAME);
@@ -56,15 +55,21 @@ public class Particles {
         if (slot == 14) {
             change(player,Particle.SNOWFLAKE);
         }
-        instance.wandBuildingManager.changeActivationItem(inventory.getItem(slot));
-        inventory.setItem(8,instance.wandBuildingManager.getWand(instance.variables.wandType.get(player),instance.variables.particles.get(player)));
+        if (inventory.getItem(slot).getItemMeta().hasLore() && slot != 8) {
+            instance.wandBuildingManager.changeActivationItem(inventory.getItem(slot));
+        }
+        inventory.setItem(8,instance.wandBuildingManager.getWand(instance.variables.wandType.get(player),
+                instance.variables.particles.get(player),
+                instance.variables.reqExp.get(player)));
     }
 
     private void change(Player player,Particle particle){
         if (instance.variables.particles.get(player).contains(particle)) {
             instance.variables.particles.get(player).remove(particle);
+            instance.variables.reqExp.put(player, instance.variables.reqExp.get(player) - instance.variables.particles.get(player).size());
         } else {
             instance.variables.particles.get(player).add(particle);
+            instance.variables.reqExp.put(player, instance.variables.reqExp.get(player) + instance.variables.particles.get(player).size()-1);
         }
     }
 }

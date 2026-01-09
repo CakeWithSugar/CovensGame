@@ -3,7 +3,9 @@ package org.cws.covensGame.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -16,93 +18,109 @@ public class CastManager {
     CovensGame instance = CovensGame.instance;
 
     public void cast(Player player, ItemStack item) {
-        List<Particle> particles = new ArrayList<>();
-        String particleNames = getLoreString(item, instance.values.particleNotation);
+        // XP-Level
+        int expReq = getLoreInt(item, instance.values.expRequieredNotation,1);
+        if (player.getLevel() >= expReq) {
+            // Partikel
+            List<Particle> particles = new ArrayList<>();
+            String particleNames = getLoreString(item, instance.values.particleNotation,0);
+            if (particleNames != null && !particleNames.isEmpty()) {
+                String[] particleArray = particleNames
+                        .replace("[", "")
+                        .replace("]", "")
+                        .split(",\\s*");
 
-        if (particleNames != null && !particleNames.isEmpty()) {
-            String[] particleArray = particleNames
-                    .replace("[", "")
-                    .replace("]", "")
-                    .split(",\\s*");
-
-            for (String name : particleArray) {
-                try {
-                    if (!name.trim().isEmpty()) {
-                        particles.add(Particle.valueOf(name.trim().toUpperCase()));
+                for (String name : particleArray) {
+                    try {
+                        if (!name.trim().isEmpty()) {
+                            particles.add(Particle.valueOf(name.trim().toUpperCase()));
+                        }
+                    } catch (IllegalArgumentException e) {
+                        player.sendMessage("§cUngültiges Partikel: " + name);
                     }
-                } catch (IllegalArgumentException e) {
-                    player.sendMessage("§cUngültiges Partikel: " + name);
                 }
             }
+            String projectile = "Snowball";
+
+            float speedMultiplier = 1;
+            boolean gravity = false;
+            int time = 10;
+
+            buildProjectile(player, speedMultiplier, projectile, particles, gravity, time);
         }
-
-        float yawOffset = 0;
-        float speedMultiplier = 1;
-        Location spawnLocation = null;
-        boolean gravity = false;
-        int time = 10;
-
-        buildProjectile(player, yawOffset, speedMultiplier, spawnLocation,particles,gravity,time);
     }
 
-    private void buildProjectile(Player player, float yawOffset, float speedMultiplier, Location spawnLocation,List<Particle> particle, boolean gravity,int time){
-        Snowball snowball;
-        float yaw = player.getLocation().getYaw() + yawOffset;
-        float pitch = player.getLocation().getPitch();
+    private void buildProjectile(Player player, float speedMultiplier, String proj,List<Particle> particle, boolean gravity,int time){
+        Vector direction = player.getEyeLocation().getDirection().normalize();
+        direction.multiply(speedMultiplier);
 
-        double radianYaw = Math.toRadians(yaw);
-        double radianPitch = Math.toRadians(pitch);
-
-        double x = -Math.sin(radianYaw) * Math.cos(radianPitch);
-        double y = -Math.sin(radianPitch);
-        double z = Math.cos(radianYaw) * Math.cos(radianPitch);
-
-        Vector direction = new Vector(x, y, z).normalize().multiply(speedMultiplier);
-        if (spawnLocation != null) {
-            snowball = spawnLocation.getWorld().spawn(spawnLocation, Snowball.class);
+        Projectile projectile;
+        if (proj.equals("Snowball")) {
+            projectile = player.launchProjectile(Snowball.class);
+        } else if (proj.equals("Arrow")) {
+            projectile = player.launchProjectile(Arrow.class);
         } else {
-            snowball = player.launchProjectile(Snowball.class);
+            projectile = player.launchProjectile(Snowball.class);
         }
-        snowball.setVelocity(direction);
-        snowball.setGravity(gravity);
+        projectile.setVelocity(direction);
+        projectile.setGravity(gravity);
 
-        setTrail(snowball,particle);
-        setDeathTimer(snowball, time);
+        setTrail(projectile,particle);
+        setDeathTimer(projectile, time);
     }
 
-    private String getLoreString(ItemStack item, String notation) {
+    private String getLoreString(ItemStack item, String notation, int lineNumber) {
+        if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
+            return null;
+        }
+
         List<String> lore = item.getItemMeta().getLore();
-        if (lore != null) {
-            for (String line : lore) {
-                if (line.contains(notation)) {
-                    return line.substring(line.indexOf(notation) + notation.length()).trim();
-                }
-            }
+        if (lore == null || lore.isEmpty() || lineNumber < 0 || lineNumber >= lore.size()) {
+            return null;
+        }
+
+        String line = lore.get(lineNumber);
+        if (line.contains(notation)) {
+            return line.substring(line.indexOf(notation) + notation.length()).trim();
         }
         return null;
     }
 
-    private void setTrail(Snowball snowball, List<Particle> particle){
-        snowball.setVisibleByDefault(false);
+    private int getLoreInt(ItemStack item, String notation, int lineNumber) {
+        List<String> lore = item.getItemMeta().getLore();
+        String line = lore.get(lineNumber);
+        if (line.contains(notation)) {
+            try {
+                String numberStr = line.substring(line.indexOf(notation) + notation.length()).trim();
+                return Integer.parseInt(numberStr);
+            } catch (NumberFormatException e) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    private void setTrail(Projectile projectile, List<Particle> particle){
+        projectile.setVisibleByDefault(false);
         Bukkit.getScheduler().runTaskTimer(instance, () -> {
-            if (snowball.isDead()) {
+            if (projectile.isDead()) {
                 return;
             }
             for (Particle par : particle) {
-                snowball.getWorld().spawnParticle(par, snowball.getLocation(), 1, 0.1, 0.1, 0.1, 0.1);
+                projectile.getWorld().spawnParticle(par, projectile.getLocation(), 1, 0.1, 0.1, 0.1, 0.05);
             }
         }, 0, 1);
     }
 
-    private void setDeathTimer(Snowball snowball, int time){
+    private void setDeathTimer(Projectile projectile, int time){
         if (time == 0) {
             time = 10;
         }
         Bukkit.getScheduler().runTaskLater(instance, () -> {
-            if (snowball.isDead()) {
+            if (projectile.isDead()) {
                 return;
             }
-            snowball.remove();
+            projectile.remove();
         }, 20L * time);
     }
 }
