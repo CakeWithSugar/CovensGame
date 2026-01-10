@@ -51,7 +51,6 @@ public final class CovensGame extends JavaPlugin {
     private void setListener() {
         getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClose(), this);
     }
 
     public static CovensGame getInstance(){

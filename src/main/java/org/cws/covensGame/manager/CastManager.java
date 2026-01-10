@@ -40,7 +40,7 @@ public class CastManager {
                     }
                 }
             }
-            String projectile = "Snowball";
+            String projectile = getLoreString(item, instance.values.particleNotation,2);
 
             float speedMultiplier = 1;
             boolean gravity = false;

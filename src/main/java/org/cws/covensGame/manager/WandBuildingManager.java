@@ -12,7 +12,11 @@ import java.util.List;
 public class WandBuildingManager {
     CovensGame instance = CovensGame.getInstance();
 
-    public ItemStack getWand(Material wandType, List<Particle> particles, int reqExp) {
+    public ItemStack getWand(Player player) {
+        Material wandType = instance.variables.wandType.get(player);
+        List<Particle> particles = instance.variables.particles.get(player);
+        int reqExp = instance.variables.reqExp.get(player);
+        String projectile = instance.variables.projectile.get(player);
         ItemStack item = new ItemStack(wandType);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -20,6 +24,7 @@ public class WandBuildingManager {
             List<String> lore = new ArrayList<>();
             lore.add(instance.values.particleNotation + particles.toString());
             lore.add(instance.values.expRequieredNotation + reqExp);
+            lore.add(instance.values.projectileNotation + projectile);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }

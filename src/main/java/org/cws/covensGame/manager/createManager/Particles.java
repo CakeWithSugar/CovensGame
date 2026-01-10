@@ -12,14 +12,12 @@ public class Particles {
     CovensGame instance = CovensGame.getInstance();
     private final String setStickName = "§6§l- Setze ein Partikel -";
     public final Inventory setParticle = Bukkit.createInventory(null, 54, setStickName);
-
-
-
-    private void setup(Inventory inventory, Material wandType){
+    
+    private void setup(Inventory inventory, Player player){
         for (int i = 0;i < inventory.getSize(); i++) {
             inventory.setItem(i,instance.wandBuildingManager.createNameIteme(Material.GRAY_STAINED_GLASS_PANE,"§a"));
         }
-        inventory.setItem(8, new ItemStack(wandType));
+        inventory.setItem(8, instance.wandBuildingManager.getWand(player));
         inventory.setItem(4, instance.wandBuildingManager.createNameIteme(Material.LIME_STAINED_GLASS,"§aAbschließen"));
 
         inventory.setItem(10,instance.wandBuildingManager.createActivationItem(Material.FIREWORK_ROCKET,"§eFeuerwerk"));
@@ -40,17 +38,29 @@ public class Particles {
 
         inventory.setItem(28,instance.wandBuildingManager.createActivationItem(Material.FLINT,"§eSilberfunkel"));
         inventory.setItem(29,instance.wandBuildingManager.createActivationItem(Material.SCULK,"§eSculk"));
+        inventory.setItem(30,instance.wandBuildingManager.createActivationItem(Material.SCULK_CATALYST,"§eSculk-Katalysator"));
+        inventory.setItem(31,instance.wandBuildingManager.createActivationItem(Material.CAMPFIRE,"§eRauch"));
+        inventory.setItem(32,instance.wandBuildingManager.createActivationItem(Material.BONE,"§eNiesen"));
+        inventory.setItem(33,instance.wandBuildingManager.createActivationItem(Material.SOUL_SAND,"§eSeele"));
+        inventory.setItem(34,instance.wandBuildingManager.createActivationItem(Material.SOUL_TORCH,"§eSeelenflamme"));
+
+        inventory.setItem(37,instance.wandBuildingManager.createActivationItem(Material.CAULDRON,"§eMagie"));
+        inventory.setItem(38,instance.wandBuildingManager.createActivationItem(Material.POTION,"§eHexerei"));
+        inventory.setItem(39,instance.wandBuildingManager.createActivationItem(Material.SPIDER_EYE,"§eSpucken"));
+        inventory.setItem(40,instance.wandBuildingManager.createActivationItem(Material.INK_SAC,"§eTinte"));
+        inventory.setItem(41,instance.wandBuildingManager.createActivationItem(Material.TOTEM_OF_UNDYING,"§eTotem"));
     }
 
     public void openParticleMenu(Player player, Material wand) {
+        instance.variables.cancelBuilding(player);
         player.openInventory(setParticle);
         instance.variables.setupForPlayer(player,wand);
-        setup(setParticle,wand);
+        setup(setParticle,player);
     }
 
     public void clickManager(int slot,Inventory inventory,Player player) {
         if (slot == 4) {
-            player.closeInventory();
+            instance.projectile.openProjectileMenu(player);
             return;
         }
         if (slot == 10) {
@@ -137,9 +147,7 @@ public class Particles {
         if (inventory.getItem(slot).getItemMeta().hasLore() && slot != 8) {
             instance.wandBuildingManager.changeActivationItem(inventory.getItem(slot));
         }
-        inventory.setItem(8,instance.wandBuildingManager.getWand(instance.variables.wandType.get(player),
-                instance.variables.particles.get(player),
-                instance.variables.reqExp.get(player)));
+        inventory.setItem(8,instance.wandBuildingManager.getWand(player);
     }
 
     private void change(Player player,Particle particle){

@@ -15,21 +15,28 @@ public class Variables {
     public Map<Player, List<Particle>> particles = new HashMap<>();
     public Map<Player, Material> wandType = new HashMap<>();
     public Map<Player, Integer> reqExp = new HashMap<>();
+    public Map<Player, String> projectile = new HashMap<>();
 
     public void setupForPlayer(Player player, Material wand){
         List<Particle> chosenParticles = new ArrayList<>();
         particles.put(player,chosenParticles);
         wandType.put(player,wand);
+        projectile.put(player,"None");
         reqExp.put(player,0);
     }
 
-    public void clearForPlayer(Player player){
+    public void confirmBuild(Player player){
         if (particles.get(player).isEmpty()) {
             particles.get(player).add(instance.values.basicParticle);
         }
-        player.getInventory().setItem(player.getInventory().getHeldItemSlot(),instance.wandBuildingManager.getWand(wandType.get(player),particles.get(player),reqExp.get(player)));
-        particles.remove(player);
+player.getInventory().setItem(player.getInventory().getHeldItemSlot(),instance.wandBuildingManager.getWand(player);
+        player.closeInventory();
+    }
+
+    public void cancelBuilding(Player player){
         wandType.remove(player);
+        particles.remove(player);
         reqExp.remove(player);
+        projectile.remove(player);
     }
 }
