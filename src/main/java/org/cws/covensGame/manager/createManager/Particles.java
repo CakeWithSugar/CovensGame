@@ -5,20 +5,19 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.cws.covensGame.CovensGame;
 
 public class Particles {
     CovensGame instance = CovensGame.getInstance();
-    private final String setStickName = "§6§l- Setze ein Partikel -";
+    private final String setStickName = "§6- Setze ein Partikel -";
     public final Inventory setParticle = Bukkit.createInventory(null, 54, setStickName);
     
     private void setup(Inventory inventory, Player player){
         for (int i = 0;i < inventory.getSize(); i++) {
             inventory.setItem(i,instance.wandBuildingManager.createNameIteme(Material.GRAY_STAINED_GLASS_PANE,"§a"));
         }
-        inventory.setItem(8, instance.wandBuildingManager.getWand(player));
-        inventory.setItem(4, instance.wandBuildingManager.createNameIteme(Material.LIME_STAINED_GLASS,"§aAbschließen"));
+        inventory.setItem(8, instance.wandBuildingManager.getWand(player,false));
+        inventory.setItem(4, instance.wandBuildingManager.createNameItemeExpReq(Material.LIME_STAINED_GLASS,"§aNächster Schritt",0));
 
         inventory.setItem(10,instance.wandBuildingManager.createActivationItem(Material.FIREWORK_ROCKET,"§eFeuerwerk"));
         inventory.setItem(11,instance.wandBuildingManager.createActivationItem(Material.FIRE_CHARGE,"§eFlammen"));
@@ -29,42 +28,40 @@ public class Particles {
         inventory.setItem(16,instance.wandBuildingManager.createActivationItem(Material.CRIMSON_FUNGUS,"§eKarminrot"));
 
         inventory.setItem(19,instance.wandBuildingManager.createActivationItem(Material.ENDER_PEARL,"§eEnder"));
-        inventory.setItem(20,instance.wandBuildingManager.createActivationItem(Material.LIGHTNING_ROD,"§eElektrisch"));
+        inventory.setItem(20,instance.wandBuildingManager.createActivationItem(Material.LIGHTNING_ROD,"§eFunken"));
         inventory.setItem(21,instance.wandBuildingManager.createActivationItem(Material.END_ROD,"§eEndstab"));
-        inventory.setItem(22,instance.wandBuildingManager.createActivationItem(Material.GLOWSTONE,"§eLeuchtend"));
+        inventory.setItem(22,instance.wandBuildingManager.createActivationItem(Material.LAPIS_LAZULI,"§eBlaugfunkel"));
         inventory.setItem(23,instance.wandBuildingManager.createActivationItem(Material.GLOW_INK_SAC,"§eLeuchtende Tinte"));
         inventory.setItem(24,instance.wandBuildingManager.createActivationItem(Material.NAUTILUS_SHELL,"§eNautilus"));
         inventory.setItem(25,instance.wandBuildingManager.createActivationItem(Material.OBSIDIAN,"§ePortal"));
 
         inventory.setItem(28,instance.wandBuildingManager.createActivationItem(Material.FLINT,"§eSilberfunkel"));
-        inventory.setItem(29,instance.wandBuildingManager.createActivationItem(Material.SCULK,"§eSculk"));
-        inventory.setItem(30,instance.wandBuildingManager.createActivationItem(Material.SCULK_CATALYST,"§eSculk-Katalysator"));
+        inventory.setItem(29,instance.wandBuildingManager.createActivationItem(Material.TRIAL_KEY,"§eOrange Köpfe"));
+        inventory.setItem(30,instance.wandBuildingManager.createActivationItem(Material.OMINOUS_TRIAL_KEY,"§eCyane Köpfe"));
         inventory.setItem(31,instance.wandBuildingManager.createActivationItem(Material.CAMPFIRE,"§eRauch"));
         inventory.setItem(32,instance.wandBuildingManager.createActivationItem(Material.BONE,"§eNiesen"));
         inventory.setItem(33,instance.wandBuildingManager.createActivationItem(Material.SOUL_SAND,"§eSeele"));
         inventory.setItem(34,instance.wandBuildingManager.createActivationItem(Material.SOUL_TORCH,"§eSeelenflamme"));
 
-        inventory.setItem(37,instance.wandBuildingManager.createActivationItem(Material.CAULDRON,"§eMagie"));
+        inventory.setItem(37,instance.wandBuildingManager.createActivationItem(Material.PLAYER_HEAD,"§eHerzen"));
         inventory.setItem(38,instance.wandBuildingManager.createActivationItem(Material.POTION,"§eHexerei"));
         inventory.setItem(39,instance.wandBuildingManager.createActivationItem(Material.SPIDER_EYE,"§eSpucken"));
         inventory.setItem(40,instance.wandBuildingManager.createActivationItem(Material.INK_SAC,"§eTinte"));
         inventory.setItem(41,instance.wandBuildingManager.createActivationItem(Material.TOTEM_OF_UNDYING,"§eTotem"));
     }
 
-    public void openParticleMenu(Player player, Material wand) {
-        instance.variables.cancelBuilding(player);
+    public void openMenu(Player player) {
         player.openInventory(setParticle);
-        instance.variables.setupForPlayer(player,wand);
         setup(setParticle,player);
     }
 
     public void clickManager(int slot,Inventory inventory,Player player) {
         if (slot == 4) {
-            instance.projectile.openProjectileMenu(player);
+            instance.objectEditor.openMenu(player);
             return;
         }
         if (slot == 10) {
-            change(player, Particle.FIREWORKS_SPARK);
+            change(player, Particle.FIREWORK);
         }
         if (slot == 11) {
             change(player,Particle.FLAME);
@@ -86,7 +83,7 @@ public class Particles {
         }
         
         if (slot == 19) {
-            change(player,Particle.CRIT_MAGIC);
+            change(player,Particle.CRIT);
         }
         if (slot == 20) {
             change(player,Particle.ELECTRIC_SPARK);
@@ -111,13 +108,13 @@ public class Particles {
             change(player,Particle.SCRAPE);
         }
         if (slot == 29) {
-            change(player,Particle.SCULK_CHARGE);
+            change(player,Particle.RAID_OMEN);
         }
         if (slot == 30) {
-            change(player,Particle.SCULK_SOUL);
+            change(player,Particle.TRIAL_OMEN);
         }
         if (slot == 31) {
-            change(player,Particle.SMOKE_NORMAL);
+            change(player,Particle.SMOKE);
         }
         if (slot == 32) {
             change(player,Particle.SNEEZE);
@@ -130,10 +127,10 @@ public class Particles {
         }
 
         if (slot == 37) {
-            change(player,Particle.SPELL);
+            change(player,Particle.HEART);
         }
         if (slot == 38) {
-            change(player,Particle.SPELL_WITCH);
+            change(player,Particle.WITCH);
         }
         if (slot == 39) {
             change(player,Particle.SPIT);
@@ -142,21 +139,26 @@ public class Particles {
             change(player,Particle.SQUID_INK);
         }
         if (slot == 41) {
-            change(player,Particle.TOTEM);
+            change(player,Particle.TOTEM_OF_UNDYING);
         }
         if (inventory.getItem(slot).getItemMeta().hasLore() && slot != 8) {
             instance.wandBuildingManager.changeActivationItem(inventory.getItem(slot));
         }
-        inventory.setItem(8,instance.wandBuildingManager.getWand(player);
+        inventory.setItem(8,instance.wandBuildingManager.getWand(player,false));
+        int cost = 0;
+        for (int i = 0; i <= instance.variables.particles.get(player).size()-1;i++) {
+            cost += i;
+        }
+        inventory.setItem(4, instance.wandBuildingManager.createNameItemeExpReq(Material.LIME_STAINED_GLASS,"§aNächster Schritt",cost));
     }
 
     private void change(Player player,Particle particle){
         if (instance.variables.particles.get(player).contains(particle)) {
             instance.variables.particles.get(player).remove(particle);
-            instance.variables.reqExp.put(player, instance.variables.reqExp.get(player) - instance.variables.particles.get(player).size());
+            instance.variables.addExp(player,- instance.variables.particles.get(player).size());
         } else {
             instance.variables.particles.get(player).add(particle);
-            instance.variables.reqExp.put(player, instance.variables.reqExp.get(player) + instance.variables.particles.get(player).size()-1);
+            instance.variables.addExp(player,+ instance.variables.particles.get(player).size()-1);
         }
     }
 }

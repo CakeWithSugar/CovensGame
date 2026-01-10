@@ -2,29 +2,48 @@ package org.cws.covensGame.manager;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.cws.covensGame.CovensGame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class WandBuildingManager {
     CovensGame instance = CovensGame.getInstance();
 
-    public ItemStack getWand(Player player) {
+    public ItemStack getWand(Player player, boolean finalWand) {
         Material wandType = instance.variables.wandType.get(player);
         List<Particle> particles = instance.variables.particles.get(player);
         int reqExp = instance.variables.reqExp.get(player);
         String projectile = instance.variables.projectile.get(player);
+        int time = instance.variables.time.get(player);
+        double gravity = instance.variables.gravity.get(player);
+        float speed = instance.variables.speed.get(player);
+
         ItemStack item = new ItemStack(wandType);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName("§eTeststab");
+            meta.setDisplayName("§eProtozauber");
             List<String> lore = new ArrayList<>();
+            if (reqExp < 0 && !finalWand) {
+                lore.add(instance.values.expRequieredNotation +"§c"+ reqExp +" §6-> 0");
+            } else if (!finalWand) {
+                lore.add(instance.values.expRequieredNotation + reqExp);
+            }
+            if (reqExp < 0 && finalWand){
+                lore.add(instance.values.expRequieredNotation + 0);
+            } else if (finalWand) {
+                lore.add(instance.values.expRequieredNotation + reqExp);
+            }
+            lore.add("");
             lore.add(instance.values.particleNotation + particles.toString());
-            lore.add(instance.values.expRequieredNotation + reqExp);
             lore.add(instance.values.projectileNotation + projectile);
+            lore.add(instance.values.timeNotation + time);
+            lore.add(instance.values.gravityNotation + String.format(Locale.US, "%.1f", gravity));
+            lore.add(instance.values.speedNotation + String.format(Locale.US, "%.1f", speed));
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -37,6 +56,77 @@ public class WandBuildingManager {
         if (meta != null) {
             meta.setDisplayName(name);
             item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public ItemStack createNameItemeExpReq(Material material, String name, int exp) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            List<String> lore = new ArrayList<>();
+            if (exp < 0) {
+                lore.add("§3Erhöhung der Levelanforderung: §c" + exp);
+            } else {
+            lore.add("§3Erhöhung der Levelanforderung: §6+" + exp);
+            }
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public ItemStack createCounterItemInt(Material material, String name, int number) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            List<String> lore = new ArrayList<>();
+            lore.add(instance.values.momentaryNotation + number);
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public ItemStack changeCounterItemInt(ItemStack item, int number) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            if (!meta.lore().isEmpty()) {
+                List<String> lore = new ArrayList<>();
+                lore.add(instance.values.momentaryNotation + (instance.loreReaderManager.getLoreInt(item, instance.values.momentaryNotation,0) + number));
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            }
+        }
+        return item;
+    }
+
+    public ItemStack createCounterItemDouble(Material material, String name, double number) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            List<String> lore = new ArrayList<>();
+            lore.add(instance.values.momentaryNotation + number);
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public ItemStack changeCounterItemDouble(ItemStack item, double number) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            if (!meta.lore().isEmpty()) {
+                List<String> lore = new ArrayList<>();
+                double result = instance.loreReaderManager.getLoreDouble(item, instance.values.momentaryNotation, 0) + number;
+                double rounded = Math.round(result * 10) / 10.0;
+                lore.add(instance.values.momentaryNotation + rounded);
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            }
         }
         return item;
     }

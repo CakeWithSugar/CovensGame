@@ -6,18 +6,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.cws.covensGame.CovensGame;
 
-import java.util.Objects;
-
 public class InventoryClick implements Listener {
     CovensGame instance = CovensGame.getInstance();
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        int slot = event.getSlot();
         if (event.getInventory().equals(instance.particles.setParticle)) {
             event.setCancelled(true);
-            int slot = event.getSlot();
             instance.particles.clickManager(slot, event.getClickedInventory(), player);
+        }
+        if (event.getInventory().equals(instance.projectile.setProjectile)) {
+            event.setCancelled(true);
+            instance.projectile.clickManager(slot, player);
+        }
+        if (event.getInventory().equals(instance.objectEditor.setObjectEditor)) {
+            event.setCancelled(true);
+            if (event.isLeftClick()) {
+                instance.objectEditor.clickManager(slot, event.getClickedInventory(), player,true);
+            }
+            if (event.isRightClick()) {
+                instance.objectEditor.clickManager(slot, event.getClickedInventory(), player,false);
+            }
         }
     }
 }
