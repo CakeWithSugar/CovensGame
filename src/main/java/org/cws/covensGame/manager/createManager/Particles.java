@@ -27,6 +27,19 @@ public class Particles {
         inventory.setItem(12,instance.wandBuildingManager.createActivationItem(Material.WATER_BUCKET,"§eWässrig"));
         inventory.setItem(13,instance.wandBuildingManager.createActivationItem(Material.EMERALD,"§eGlizernd grün"));
         inventory.setItem(14,instance.wandBuildingManager.createActivationItem(Material.POWDER_SNOW_BUCKET,"§eSchnee"));
+        inventory.setItem(15,instance.wandBuildingManager.createActivationItem(Material.WHITE_WOOL,"§eWolken"));
+        inventory.setItem(16,instance.wandBuildingManager.createActivationItem(Material.CRIMSON_FUNGUS,"§eKarminrot"));
+
+        inventory.setItem(19,instance.wandBuildingManager.createActivationItem(Material.ENDER_PEARL,"§eEnder"));
+        inventory.setItem(20,instance.wandBuildingManager.createActivationItem(Material.LIGHTNING_ROD,"§eElektrisch"));
+        inventory.setItem(21,instance.wandBuildingManager.createActivationItem(Material.END_ROD,"§eEndstab"));
+        inventory.setItem(22,instance.wandBuildingManager.createActivationItem(Material.GLOWSTONE,"§eLeuchtend"));
+        inventory.setItem(23,instance.wandBuildingManager.createActivationItem(Material.GLOW_INK_SAC,"§eLeuchtende Tinte"));
+        inventory.setItem(24,instance.wandBuildingManager.createActivationItem(Material.NAUTILUS_SHELL,"§eNautilus"));
+        inventory.setItem(25,instance.wandBuildingManager.createActivationItem(Material.OBSIDIAN,"§ePortal"));
+
+        inventory.setItem(28,instance.wandBuildingManager.createActivationItem(Material.FLINT,"§eSilberfunkel"));
+        inventory.setItem(29,instance.wandBuildingManager.createActivationItem(Material.SCULK,"§eSculk"));
     }
 
     public void openParticleMenu(Player player, Material wand) {
@@ -54,6 +67,72 @@ public class Particles {
         }
         if (slot == 14) {
             change(player,Particle.SNOWFLAKE);
+        }
+        if (slot == 15) {
+            change(player,Particle.CLOUD);
+        }
+        if (slot == 16) {
+            change(player,Particle.CRIMSON_SPORE);
+        }
+        
+        if (slot == 19) {
+            change(player,Particle.CRIT_MAGIC);
+        }
+        if (slot == 20) {
+            change(player,Particle.ELECTRIC_SPARK);
+        }
+        if (slot == 21) {
+            change(player,Particle.END_ROD);
+        }
+        if (slot == 22) {
+            change(player,Particle.GLOW);
+        }
+        if (slot == 23) {
+            change(player,Particle.GLOW_SQUID_INK);
+        }
+        if (slot == 24) {
+            change(player,Particle.NAUTILUS);
+        }
+        if (slot == 25) {
+            change(player,Particle.PORTAL);
+        }
+
+        if (slot == 28) {
+            change(player,Particle.SCRAPE);
+        }
+        if (slot == 29) {
+            change(player,Particle.SCULK_CHARGE);
+        }
+        if (slot == 30) {
+            change(player,Particle.SCULK_SOUL);
+        }
+        if (slot == 31) {
+            change(player,Particle.SMOKE_NORMAL);
+        }
+        if (slot == 32) {
+            change(player,Particle.SNEEZE);
+        }
+        if (slot == 33) {
+            change(player,Particle.SOUL);
+        }
+        if (slot == 34) {
+            change(player,Particle.SOUL_FIRE_FLAME);
+        }
+
+        if (slot == 37) {
+            change(player,Particle.SPELL);
+        }
+        if (slot == 38) {
+            change(player,Particle.SPELL_WITCH);
+        }
+        if (slot == 39) {
+            change(player,Particle.SPIT);
+        }
+        if (slot == 40) {
+            change(player,Particle.SQUID_INK);
+        }
+        if (slot == 41) {
+            change(player,Particle.TOTEM);
         }
         if (inventory.getItem(slot).getItemMeta().hasLore() && slot != 8) {
             instance.wandBuildingManager.changeActivationItem(inventory.getItem(slot));
