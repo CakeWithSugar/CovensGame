@@ -19,7 +19,7 @@ public class Particles {
         for (int i = 0;i < inventory.getSize(); i++) {
             inventory.setItem(i,instance.wandBuildingManager.createNameIteme(Material.GRAY_STAINED_GLASS_PANE,"§a"));
         }
-        inventory.setItem(8, ItemStack.of(wandType));
+        inventory.setItem(8, new ItemStack(wandType));
         inventory.setItem(4, instance.wandBuildingManager.createNameIteme(Material.LIME_STAINED_GLASS,"§aAbschließen"));
 
         inventory.setItem(10,instance.wandBuildingManager.createActivationItem(Material.FIREWORK_ROCKET,"§eFeuerwerk"));
@@ -41,7 +41,7 @@ public class Particles {
             return;
         }
         if (slot == 10) {
-            change(player, Particle.FIREWORK);
+            change(player, Particle.FIREWORKS_SPARK);
         }
         if (slot == 11) {
             change(player,Particle.FLAME);

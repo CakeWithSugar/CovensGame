@@ -22,7 +22,7 @@ public class PlayerInteract implements Listener {
         Action action = event.getAction();
 
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-            if (item.getType().equals(Material.STICK) || item.getType().equals(Material.BLAZE_ROD) || item.getType().equals(Material.BREEZE_ROD)) {
+            if (item.getType().equals(Material.STICK) || item.getType().equals(Material.BLAZE_ROD)) {
                 event.setCancelled(true);
                 if ((event.getClickedBlock() != null && event.getClickedBlock().getType().equals(Material.ENCHANTING_TABLE))) {
                     instance.particles.openParticleMenu(player,item.getType());
