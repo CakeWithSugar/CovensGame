@@ -14,14 +14,20 @@ import java.util.List;
 public class CastManager {
     CovensGame instance = CovensGame.instance;
     public List<Projectile> activeProjectiles = new ArrayList<>();
+    public List<Player> onCooldown = new ArrayList<>();
 
     public void cast(Player player, ItemStack item) {
-        // XP-Level
+        if (onCooldown.contains(player)) {
+            return;
+        }
+
         int expReq = instance.loreReaderManager.getLoreInt(item, instance.values.expRequieredNotation,0);
+        int cooldown = instance.loreReaderManager.getLoreInt(item, instance.values.cooldownNotation,1);
+
         if (player.getLevel() >= expReq || player.getGameMode() == GameMode.CREATIVE) {
             // Partikel
             List<Particle> particles = new ArrayList<>();
-            String particleNames = instance.loreReaderManager.getLoreString(item, instance.values.particleNotation,2);
+            String particleNames = instance.loreReaderManager.getLoreString(item, instance.values.particleNotation,3);
             if (particleNames != null && !particleNames.isEmpty()) {
                 String[] particleArray = particleNames
                         .replace("[", "")
@@ -38,16 +44,18 @@ public class CastManager {
                     }
                 }
             }
-            String projectile = instance.loreReaderManager.getLoreString(item, instance.values.projectileNotation,3);
-            int time = instance.loreReaderManager.getLoreInt(item, instance.values.timeNotation,4);
-            double gravity = instance.loreReaderManager.getLoreDouble(item, instance.values.gravityNotation,5);
-            float speedMultiplier = instance.loreReaderManager.getLoreFloat(item, instance.values.speedNotation,6);
+            String projectile = instance.loreReaderManager.getLoreString(item, instance.values.projectileNotation,4);
+            int time = instance.loreReaderManager.getLoreInt(item, instance.values.timeNotation,5);
+            double gravity = instance.loreReaderManager.getLoreDouble(item, instance.values.gravityNotation,6);
+            double speedMultiplier = instance.loreReaderManager.getLoreDouble(item, instance.values.speedNotation,7);
+            String projectileEffect = instance.loreReaderManager.getLoreString(item, instance.values.projectileEffectNotation,8);
 
-            buildProjectile(player, speedMultiplier, projectile, particles, gravity, time);
+            buildProjectile(player, speedMultiplier, projectile, particles, gravity, time,projectileEffect);
+            setOnCooldown(player,cooldown);
         }
     }
 
-    private void buildProjectile(Player player, float speedMultiplier, String proj,List<Particle> particle, double gravity,int time){
+    private void buildProjectile(Player player, double speedMultiplier, String proj,List<Particle> particle, double gravity,int time,String projectileEffect){
         Vector direction = player.getEyeLocation().getDirection().normalize();
         direction.multiply(speedMultiplier);
 
@@ -72,6 +80,24 @@ public class CastManager {
         setTrail(projectile,particle);
         setDeathTimer(projectile, time);
         activeProjectiles.add(projectile);
+        castEffect(projectile,particle,projectileEffect,time,speedMultiplier);
+    }
+
+    private void castEffect(Projectile projectile, List<Particle> particles, String projectileEffect,int time,double speed) {
+        final int[] taskId = new int[1];
+
+        int duration = time/2;
+        double radius = speed*1.5;
+        taskId[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
+            if (!projectile.isDead() || projectile.isValid()) {
+                return;
+            }
+
+            if (projectileEffect.equals("Kreis")) {
+                instance.projectileEffectManager.castCircle(projectile.getLocation().toCenterLocation(), particles, radius, duration);
+            }
+            Bukkit.getScheduler().cancelTask(taskId[0]);
+        }, 0, 2);
     }
 
     private void applyGravity(Projectile projectile,double gravityLevel) {
@@ -119,5 +145,14 @@ public class CastManager {
             activeProjectiles.remove(projectile);
             projectile.remove();
         }, 20L * time);
+    }
+
+    private void setOnCooldown(Player player, int cooldownTime){
+        if (cooldownTime != 0) {
+            onCooldown.add(player);
+            Bukkit.getScheduler().runTaskLater(instance, () -> {
+                onCooldown.remove(player);
+            }, 20L * cooldownTime);
+        }
     }
 }

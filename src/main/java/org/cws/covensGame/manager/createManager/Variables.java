@@ -12,14 +12,18 @@ import java.util.Map;
 
 public class Variables {
     CovensGame instance = CovensGame.getInstance();
+    public Map<Player, Integer> reqExp = new HashMap<>();
+    public Map<Player, Integer> cooldown = new HashMap<>();
+
     public Map<Player, List<Particle>> particles = new HashMap<>();
     public Map<Player, Material> wandType = new HashMap<>();
-    public Map<Player, Integer> reqExp = new HashMap<>();
     public Map<Player, String> projectile = new HashMap<>();
 
     public Map<Player, Integer> time = new HashMap<>();
     public Map<Player, Double> gravity = new HashMap<>();
     public Map<Player, Float> speed = new HashMap<>();
+
+    public Map<Player, String> projectileEffect = new HashMap<>();
 
     public void setupForPlayer(Player player, Material wand){
         List<Particle> chosenParticles = new ArrayList<>();
@@ -27,13 +31,19 @@ public class Variables {
         wandType.put(player,wand);
         projectile.put(player,instance.values.basicProjectile);
         reqExp.put(player,instance.values.basicExp);
+        cooldown.put(player,instance.values.basicCooldown);
         time.put(player,instance.values.basicTime);
         gravity.put(player,instance.values.basicGravity);
         speed.put(player,instance.values.basicSpeed);
+        projectileEffect.put(player,instance.values.basicProjectileEffect);
     }
 
     public void addExp(Player player,int number){
         instance.variables.reqExp.put(player, instance.variables.reqExp.get(player) + number);
+    }
+
+    public void addCooldown(Player player,int number){
+        instance.variables.cooldown.put(player, instance.variables.cooldown.get(player) + number);
     }
 
     public void confirmBuild(Player player){
@@ -52,7 +62,6 @@ player.getInventory().setItem(player.getInventory().getHeldItemSlot(),instance.w
         time.remove(player);
         gravity.remove(player);
         speed.remove(player);
-        instance.objectEditor.timeCounter.remove(player);
-        instance.objectEditor.cost.remove(player);
+        projectileEffect.remove(player);
     }
 }

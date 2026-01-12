@@ -17,7 +17,7 @@ public class Particles {
             inventory.setItem(i,instance.wandBuildingManager.createNameIteme(Material.GRAY_STAINED_GLASS_PANE,"§a"));
         }
         inventory.setItem(8, instance.wandBuildingManager.getWand(player,false));
-        inventory.setItem(4, instance.wandBuildingManager.createNameItemeExpReq(Material.LIME_STAINED_GLASS,"§aNächster Schritt",0));
+        inventory.setItem(4, instance.wandBuildingManager.createNameItemRequirements(Material.LIME_STAINED_GLASS,"§aNächster Schritt",0,0));
 
         inventory.setItem(10,instance.wandBuildingManager.createActivationItem(Material.FIREWORK_ROCKET,"§eFeuerwerk"));
         inventory.setItem(11,instance.wandBuildingManager.createActivationItem(Material.FIRE_CHARGE,"§eFlammen"));
@@ -149,7 +149,7 @@ public class Particles {
         for (int i = 0; i <= instance.variables.particles.get(player).size()-1;i++) {
             cost += i;
         }
-        inventory.setItem(4, instance.wandBuildingManager.createNameItemeExpReq(Material.LIME_STAINED_GLASS,"§aNächster Schritt",cost));
+        inventory.setItem(4, instance.wandBuildingManager.createNameItemRequirements(Material.LIME_STAINED_GLASS,"§aNächster Schritt",cost,0));
     }
 
     private void change(Player player,Particle particle){

@@ -30,5 +30,9 @@ public class InventoryClick implements Listener {
                 instance.objectEditor.clickManager(slot, event.getClickedInventory(), player,false);
             }
         }
+        if (event.getInventory().equals(instance.destructionEditor.setDestruction)) {
+            event.setCancelled(true);
+            instance.destructionEditor.clickManager(slot, player);
+        }
     }
 }

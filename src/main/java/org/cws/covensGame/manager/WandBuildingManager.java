@@ -15,10 +15,13 @@ public class WandBuildingManager {
     CovensGame instance = CovensGame.getInstance();
 
     public ItemStack getWand(Player player, boolean finalWand) {
+        int reqExp = instance.variables.reqExp.get(player);
+        int cooldown = instance.variables.cooldown.get(player);
+
         Material wandType = instance.variables.wandType.get(player);
         List<Particle> particles = instance.variables.particles.get(player);
-        int reqExp = instance.variables.reqExp.get(player);
         String projectile = instance.variables.projectile.get(player);
+        String projectileEffect = instance.variables.projectileEffect.get(player);
         int time = instance.variables.time.get(player);
         double gravity = instance.variables.gravity.get(player);
         float speed = instance.variables.speed.get(player);
@@ -38,12 +41,24 @@ public class WandBuildingManager {
             } else if (finalWand) {
                 lore.add(instance.values.expRequieredNotation + reqExp);
             }
+
+            if (cooldown < 0 && !finalWand) {
+                lore.add(instance.values.cooldownNotation +"§c"+ cooldown +" §6-> 0");
+            } else if (!finalWand) {
+                lore.add(instance.values.cooldownNotation + cooldown);
+            }
+            if (cooldown < 0 && finalWand){
+                lore.add(instance.values.cooldownNotation + 0);
+            } else if (finalWand) {
+                lore.add(instance.values.cooldownNotation + cooldown);
+            }
             lore.add("");
             lore.add(instance.values.particleNotation + particles.toString());
             lore.add(instance.values.projectileNotation + projectile);
             lore.add(instance.values.timeNotation + time);
             lore.add(instance.values.gravityNotation + String.format(Locale.US, "%.1f", gravity));
             lore.add(instance.values.speedNotation + String.format(Locale.US, "%.1f", speed));
+            lore.add(instance.values.projectileEffectNotation + projectileEffect);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -60,7 +75,7 @@ public class WandBuildingManager {
         return item;
     }
 
-    public ItemStack createNameItemeExpReq(Material material, String name, int exp) {
+    public ItemStack createNameItemRequirements(Material material, String name, int exp,int cooldown) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -70,6 +85,11 @@ public class WandBuildingManager {
                 lore.add("§3Erhöhung der Levelanforderung: §c" + exp);
             } else {
             lore.add("§3Erhöhung der Levelanforderung: §6+" + exp);
+            }
+            if (cooldown < 0) {
+                lore.add("§3Erhöhung der Ablinkzeit: §a" + cooldown);
+            } else {
+                lore.add("§3Erhöhung der Ablinkzeit: §a+" + cooldown);
             }
             meta.setLore(lore);
             item.setItemMeta(meta);
