@@ -14,6 +14,7 @@ public class Values {
     private final CovensMain instance = CovensMain.getCovens();
 
     public Map<Player,String> coven = new HashMap<>();
+    public Map<Player,Integer> passiveLevel = new HashMap<>();
     public Map<Player,Integer> ability1Level = new HashMap<>();
     public Map<Player,Integer> ability2Level = new HashMap<>();
     public Map<Player,Integer> ability3Level = new HashMap<>();
@@ -31,20 +32,29 @@ public class Values {
                 cov = coven.get(player);
             }
             coven.put(player, cov);
-            int l1 = Integer.parseInt(readFile(player, 1));
-            int l2 = Integer.parseInt(readFile(player, 2));
-            int l3 = Integer.parseInt(readFile(player, 3));
+            String line1 = readFile(player, 1);
+            String line2 = readFile(player, 2);
+            String line3 = readFile(player, 3);
+            String line4 = readFile(player, 4);
 
-            ability1Level.put(player, l1);
-            ability2Level.put(player, l2);
-            ability3Level.put(player, l3);
+            int l1 = Integer.parseInt(line1 != null ? line1 : "-1");
+            int l2 = Integer.parseInt(line2 != null ? line2 : "-1");
+            int l3 = Integer.parseInt(line3 != null ? line3 : "-1");
+            int l4 = Integer.parseInt(line4 != null ? line4 : "-1");
+
+            passiveLevel.put(player, l1);
+            ability1Level.put(player, l2);
+            ability2Level.put(player, l3);
+            ability3Level.put(player, l4);
             if (debug) {
                 player.sendMessage("§aCoven: " + coven.get(player));
-                player.sendMessage("§aAbilities: " + ability1Level.get(player) + ", " + ability2Level.get(player) + ", " + ability3Level.get(player));
+                player.sendMessage("§aAbilities: " + passiveLevel.get(player) + ", " + ability1Level.get(player) + ", " + ability2Level.get(player) + ", " + ability3Level.get(player));
             }
+            instance.covenAbilityOrganizer.getPassiv(player);
         } else {
             editFile(player);
             coven.remove(player);
+            passiveLevel.remove(player);
             ability1Level.remove(player);
             ability2Level.remove(player);
             ability3Level.remove(player);
@@ -62,6 +72,8 @@ public class Values {
         File file = new File(parent, player.getName()+".dat");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(String.format(Locale.US, "%s", "None"));
+            writer.newLine();
+            writer.write(String.format(Locale.US, "%d", 0));
             writer.newLine();
             writer.write(String.format(Locale.US, "%d", -1));
             writer.newLine();
@@ -85,6 +97,8 @@ public class Values {
         File file = new File(parent, player.getName()+".dat");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(String.format(Locale.US, "%s", coven.get(player)));
+            writer.newLine();
+            writer.write(String.format(Locale.US, "%d", passiveLevel.get(player)));
             writer.newLine();
             writer.write(String.format(Locale.US, "%d", ability1Level.get(player)));
             writer.newLine();

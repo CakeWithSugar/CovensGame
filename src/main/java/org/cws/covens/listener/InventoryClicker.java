@@ -17,5 +17,9 @@ public class InventoryClicker implements Listener {
             event.setCancelled(true);
             instance.covenChoseing.clickManager(slot, player);
         }
+        if (event.getInventory().equals(instance.levelingChard.setAbilities)) {
+            event.setCancelled(true);
+            instance.levelingChard.clickManager(slot, player);
+        }
     }
 }

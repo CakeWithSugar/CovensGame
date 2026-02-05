@@ -2,3 +2,7 @@ name: CovensGame
 version: '1.0'
 main: org.cws.MainGeneral
 api-version: '1.19'
+commands:
+    leveling:
+        description: "Open the leveling menu"
+        usage: "/leveling"
