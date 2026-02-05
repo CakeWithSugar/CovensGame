@@ -1,4 +1,4 @@
 name: CovensGame
 version: '1.0'
-main: org.cws.covensGame.CovensGame
+main: org.cws.MainGeneral
 api-version: '1.19'

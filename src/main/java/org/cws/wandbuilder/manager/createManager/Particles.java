@@ -57,7 +57,7 @@ public class Particles {
 
     public void clickManager(int slot,Inventory inventory,Player player) {
         if (slot == 4) {
-            instance.objectEditor.openMenu(player);
+            instance.values.openMenu(player);
             return;
         }
         if (slot == 10) {

@@ -38,7 +38,7 @@ public class ProjectileEffectManager {
                     );
                 }
             }
-        }, 0, wandbuilder.values.recursionTicks);
+        }, 0, wandbuilder.baseValues.recursionTicks);
         Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
             Bukkit.getScheduler().cancelTask(task);
         }, 20L *duration);
@@ -126,7 +126,7 @@ public class ProjectileEffectManager {
                         particles, progress
                 );
             }
-        }, 0, wandbuilder.values.recursionTicks);
+        }, 0, wandbuilder.baseValues.recursionTicks);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
             Bukkit.getScheduler().cancelTask(task);

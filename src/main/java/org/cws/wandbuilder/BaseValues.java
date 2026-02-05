@@ -14,7 +14,6 @@ public class BaseValues {
 
     public String momentaryNotation = "§aMomentan: §7";
 
-
     public int recursionTicks = 10;
     public Particle basicParticle = Particle.FIREWORK;
     public int basicTime = 1;

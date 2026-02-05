@@ -21,18 +21,18 @@ public class InventoryClick implements Listener {
             event.setCancelled(true);
             instance.projectile.clickManager(slot, player);
         }
-        if (event.getInventory().equals(instance.objectEditor.setObjectEditor)) {
+        if (event.getInventory().equals(instance.values.setObjectEditor)) {
             event.setCancelled(true);
             if (event.isLeftClick()) {
-                instance.objectEditor.clickManager(slot, event.getClickedInventory(), player,true);
+                instance.values.clickManager(slot, event.getClickedInventory(), player,true);
             }
             if (event.isRightClick()) {
-                instance.objectEditor.clickManager(slot, event.getClickedInventory(), player,false);
+                instance.values.clickManager(slot, event.getClickedInventory(), player,false);
             }
         }
-        if (event.getInventory().equals(instance.destructionEditor.setDestruction)) {
+        if (event.getInventory().equals(instance.destruction.setDestruction)) {
             event.setCancelled(true);
-            instance.destructionEditor.clickManager(slot, player);
+            instance.destruction.clickManager(slot, player);
         }
     }
 }

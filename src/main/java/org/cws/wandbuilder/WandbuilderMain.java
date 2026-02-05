@@ -11,7 +11,7 @@ import org.cws.wandbuilder.manager.ProjectileEffectManager;
 import org.cws.wandbuilder.manager.WandBuildingManager;
 import org.cws.wandbuilder.manager.createManager.*;
 
-public class WandbuilderMain {
+public final class WandbuilderMain {
     public static WandbuilderMain wandbuilder;
 
     public CastManager castManager;
@@ -19,13 +19,13 @@ public class WandbuilderMain {
     public LoreReaderManager loreReaderManager;
     public ProjectileEffectManager projectileEffectManager;
 
-    public BaseValues values;
+    public BaseValues baseValues;
     public Variables variables;
 
     public Projectile projectile;
     public Particles particles;
-    public ObjectEditor objectEditor;
-    public DestructionEditor destructionEditor;
+    public Values values;
+    public Destruction destruction;
 
     public void onEnable(Server server,Plugin plugin) {
         wandbuilder = this;
@@ -35,7 +35,7 @@ public class WandbuilderMain {
     }
 
     private void setLists() {
-        values = new BaseValues();
+        baseValues = new BaseValues();
         variables = new Variables();
     }
 
@@ -47,8 +47,8 @@ public class WandbuilderMain {
 
         projectile = new Projectile();
         particles = new Particles();
-        objectEditor = new ObjectEditor();
-        destructionEditor = new DestructionEditor();
+        values = new Values();
+        destruction = new Destruction();
     }
 
     private void setListener(Server server,Plugin plugin) {

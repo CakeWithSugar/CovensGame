@@ -9,7 +9,7 @@ import org.cws.wandbuilder.WandbuilderMain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ObjectEditor {
+public class Values {
     WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     private final String setObjectEditorName = "§6- Setze die Projektil Werte -";
     public final Inventory setObjectEditor = Bukkit.createInventory(null, 18, setObjectEditorName);
@@ -22,9 +22,9 @@ public class ObjectEditor {
         inventory.setItem(8, instance.wandBuildingManager.getWand(player,false));
         inventory.setItem(4, instance.wandBuildingManager.createNameItemRequirements(Material.LIME_STAINED_GLASS,"§aNächster Schritt",0,0));
 
-        inventory.setItem(11,instance.wandBuildingManager.createCounterItemDouble(Material.ANVIL,"§eGravitation",instance.values.basicGravity));
-        inventory.setItem(13,instance.wandBuildingManager.createCounterItemDouble(Material.RABBIT_FOOT,"§eGeschwindigkeit",instance.values.basicSpeed));
-        inventory.setItem(15,instance.wandBuildingManager.createCounterItemInt(Material.ARROW,"§eLebensdauer",instance.values.basicTime));
+        inventory.setItem(11,instance.wandBuildingManager.createCounterItemDouble(Material.ANVIL,"§eGravitation",instance.baseValues.basicGravity));
+        inventory.setItem(13,instance.wandBuildingManager.createCounterItemDouble(Material.RABBIT_FOOT,"§eGeschwindigkeit",instance.baseValues.basicSpeed));
+        inventory.setItem(15,instance.wandBuildingManager.createCounterItemInt(Material.ARROW,"§eLebensdauer",instance.baseValues.basicTime));
     }
 
     public void openMenu(Player player) {
@@ -35,7 +35,7 @@ public class ObjectEditor {
 
     public void clickManager(int slot,Inventory inventory,Player player,boolean highten) {
         if (slot == 4) {
-            instance.destructionEditor.openMenu(player);
+            instance.destruction.openMenu(player);
             return;
         }
         if (slot == 11) {

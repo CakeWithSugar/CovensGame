@@ -25,13 +25,13 @@ public class CastManager {
             return;
         }
 
-        int expReq = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.values.expRequieredNotation,0);
-        int cooldown = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.values.cooldownNotation,1);
+        int expReq = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.baseValues.expRequieredNotation,0);
+        int cooldown = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.baseValues.cooldownNotation,1);
 
         if (player.getLevel() >= expReq || player.getGameMode() == GameMode.CREATIVE) {
             // Partikel
             List<Particle> particles = new ArrayList<>();
-            String particleNames = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.values.particleNotation,3);
+            String particleNames = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.baseValues.particleNotation,3);
             if (particleNames != null && !particleNames.isEmpty()) {
                 String[] particleArray = particleNames
                         .replace("[", "")
@@ -48,11 +48,11 @@ public class CastManager {
                     }
                 }
             }
-            String projectile = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.values.projectileNotation,4);
-            int time = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.values.timeNotation,5);
-            double gravity = wandbuilder.loreReaderManager.getLoreDouble(item, wandbuilder.values.gravityNotation,6);
-            double speedMultiplier = wandbuilder.loreReaderManager.getLoreDouble(item, wandbuilder.values.speedNotation,7);
-            String projectileEffect = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.values.projectileEffectNotation,8);
+            String projectile = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.baseValues.projectileNotation,4);
+            int time = wandbuilder.loreReaderManager.getLoreInt(item, wandbuilder.baseValues.timeNotation,5);
+            double gravity = wandbuilder.loreReaderManager.getLoreDouble(item, wandbuilder.baseValues.gravityNotation,6);
+            double speedMultiplier = wandbuilder.loreReaderManager.getLoreDouble(item, wandbuilder.baseValues.speedNotation,7);
+            String projectileEffect = wandbuilder.loreReaderManager.getLoreString(item, wandbuilder.baseValues.projectileEffectNotation,8);
 
             buildProjectile(player,null, null, speedMultiplier, projectile, particles, gravity, time,projectileEffect);
             setOnCooldown(player,cooldown);
@@ -160,7 +160,7 @@ public class CastManager {
 
     private void setDeathTimer(Projectile projectile, int time){
         if (time == 0) {
-            time = wandbuilder.values.basicTime;
+            time = wandbuilder.baseValues.basicTime;
         }
         Bukkit.getScheduler().runTaskTimer(main, () -> {
             if (projectile.isDead()) {

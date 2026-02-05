@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.cws.wandbuilder.WandbuilderMain;
 
-public class DestructionEditor {
+public class Destruction {
     WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     private final String setDesructionName = "§6- Setze ein Ankunftseffekt -";
     public final Inventory setDestruction = Bukkit.createInventory(null, 9, setDesructionName);

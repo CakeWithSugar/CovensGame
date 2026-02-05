@@ -29,13 +29,13 @@ public class Variables {
         List<Particle> chosenParticles = new ArrayList<>();
         particles.put(player,chosenParticles);
         wandType.put(player,wand);
-        projectile.put(player,instance.values.basicProjectile);
-        reqExp.put(player,instance.values.basicExp);
-        cooldown.put(player,instance.values.basicCooldown);
-        time.put(player,instance.values.basicTime);
-        gravity.put(player,instance.values.basicGravity);
-        speed.put(player,instance.values.basicSpeed);
-        projectileEffect.put(player,instance.values.basicProjectileEffect);
+        projectile.put(player,instance.baseValues.basicProjectile);
+        reqExp.put(player,instance.baseValues.basicExp);
+        cooldown.put(player,instance.baseValues.basicCooldown);
+        time.put(player,instance.baseValues.basicTime);
+        gravity.put(player,instance.baseValues.basicGravity);
+        speed.put(player,instance.baseValues.basicSpeed);
+        projectileEffect.put(player,instance.baseValues.basicProjectileEffect);
     }
 
     public void addExp(Player player,int number){
@@ -48,7 +48,7 @@ public class Variables {
 
     public void confirmBuild(Player player){
         if (particles.get(player).isEmpty()) {
-            particles.get(player).add(instance.values.basicParticle);
+            particles.get(player).add(instance.baseValues.basicParticle);
         }
 player.getInventory().setItem(player.getInventory().getHeldItemSlot(),instance.wandBuildingManager.getWand(player,true));
         player.closeInventory();

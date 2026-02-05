@@ -32,33 +32,33 @@ public class WandBuildingManager {
             meta.setDisplayName("§eProtozauber");
             List<String> lore = new ArrayList<>();
             if (reqExp < 0 && !finalWand) {
-                lore.add(instance.values.expRequieredNotation +"§c"+ reqExp +" §6-> 0");
+                lore.add(instance.baseValues.expRequieredNotation +"§c"+ reqExp +" §6-> 0");
             } else if (!finalWand) {
-                lore.add(instance.values.expRequieredNotation + reqExp);
+                lore.add(instance.baseValues.expRequieredNotation + reqExp);
             }
             if (reqExp < 0 && finalWand){
-                lore.add(instance.values.expRequieredNotation + 0);
+                lore.add(instance.baseValues.expRequieredNotation + 0);
             } else if (finalWand) {
-                lore.add(instance.values.expRequieredNotation + reqExp);
+                lore.add(instance.baseValues.expRequieredNotation + reqExp);
             }
 
             if (cooldown < 0 && !finalWand) {
-                lore.add(instance.values.cooldownNotation +"§c"+ cooldown +" §6-> 0");
+                lore.add(instance.baseValues.cooldownNotation +"§c"+ cooldown +" §6-> 0");
             } else if (!finalWand) {
-                lore.add(instance.values.cooldownNotation + cooldown);
+                lore.add(instance.baseValues.cooldownNotation + cooldown);
             }
             if (cooldown < 0 && finalWand){
-                lore.add(instance.values.cooldownNotation + 0);
+                lore.add(instance.baseValues.cooldownNotation + 0);
             } else if (finalWand) {
-                lore.add(instance.values.cooldownNotation + cooldown);
+                lore.add(instance.baseValues.cooldownNotation + cooldown);
             }
             lore.add("");
-            lore.add(instance.values.particleNotation + particles.toString());
-            lore.add(instance.values.projectileNotation + projectile);
-            lore.add(instance.values.timeNotation + time);
-            lore.add(instance.values.gravityNotation + String.format(Locale.US, "%.1f", gravity));
-            lore.add(instance.values.speedNotation + String.format(Locale.US, "%.1f", speed));
-            lore.add(instance.values.projectileEffectNotation + projectileEffect);
+            lore.add(instance.baseValues.particleNotation + particles.toString());
+            lore.add(instance.baseValues.projectileNotation + projectile);
+            lore.add(instance.baseValues.timeNotation + time);
+            lore.add(instance.baseValues.gravityNotation + String.format(Locale.US, "%.1f", gravity));
+            lore.add(instance.baseValues.speedNotation + String.format(Locale.US, "%.1f", speed));
+            lore.add(instance.baseValues.projectileEffectNotation + projectileEffect);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -103,7 +103,7 @@ public class WandBuildingManager {
         if (meta != null) {
             meta.setDisplayName(name);
             List<String> lore = new ArrayList<>();
-            lore.add(instance.values.momentaryNotation + number);
+            lore.add(instance.baseValues.momentaryNotation + number);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -115,7 +115,7 @@ public class WandBuildingManager {
         if (meta != null) {
             if (!meta.lore().isEmpty()) {
                 List<String> lore = new ArrayList<>();
-                lore.add(instance.values.momentaryNotation + (instance.loreReaderManager.getLoreInt(item, instance.values.momentaryNotation,0) + number));
+                lore.add(instance.baseValues.momentaryNotation + (instance.loreReaderManager.getLoreInt(item, instance.baseValues.momentaryNotation,0) + number));
                 meta.setLore(lore);
                 item.setItemMeta(meta);
             }
@@ -129,7 +129,7 @@ public class WandBuildingManager {
         if (meta != null) {
             meta.setDisplayName(name);
             List<String> lore = new ArrayList<>();
-            lore.add(instance.values.momentaryNotation + number);
+            lore.add(instance.baseValues.momentaryNotation + number);
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -141,9 +141,9 @@ public class WandBuildingManager {
         if (meta != null) {
             if (!meta.lore().isEmpty()) {
                 List<String> lore = new ArrayList<>();
-                double result = instance.loreReaderManager.getLoreDouble(item, instance.values.momentaryNotation, 0) + number;
+                double result = instance.loreReaderManager.getLoreDouble(item, instance.baseValues.momentaryNotation, 0) + number;
                 double rounded = Math.round(result * 10) / 10.0;
-                lore.add(instance.values.momentaryNotation + rounded);
+                lore.add(instance.baseValues.momentaryNotation + rounded);
                 meta.setLore(lore);
                 item.setItemMeta(meta);
             }
