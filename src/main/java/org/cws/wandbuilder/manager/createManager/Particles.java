@@ -1,14 +1,14 @@
-package org.cws.covensGame.manager.createManager;
+package org.cws.wandbuilder.manager.createManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 public class Particles {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     private final String setStickName = "§6- Setze ein Partikel -";
     public final Inventory setParticle = Bukkit.createInventory(null, 54, setStickName);
     

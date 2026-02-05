@@ -1,18 +1,18 @@
-package org.cws.covensGame.manager;
+package org.cws.wandbuilder.manager;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class WandBuildingManager {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
 
     public ItemStack getWand(Player player, boolean finalWand) {
         int reqExp = instance.variables.reqExp.get(player);

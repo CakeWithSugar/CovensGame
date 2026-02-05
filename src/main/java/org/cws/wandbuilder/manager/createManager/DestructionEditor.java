@@ -1,13 +1,13 @@
-package org.cws.covensGame.manager.createManager;
+package org.cws.wandbuilder.manager.createManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 public class DestructionEditor {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     private final String setDesructionName = "§6- Setze ein Ankunftseffekt -";
     public final Inventory setDestruction = Bukkit.createInventory(null, 9, setDesructionName);
 
@@ -22,8 +22,6 @@ public class DestructionEditor {
         inventory.setItem(1,instance.wandBuildingManager.createNameIteme(Material.BARRIER,"§eKein Effekt"));
         inventory.setItem(2,instance.wandBuildingManager.createNameItemRequirements(Material.SLIME_BALL,"§eSpringer",5,(int) Math.ceil(instance.variables.time.get(player) / 4.0)));
         inventory.setItem(3,instance.wandBuildingManager.createNameItemRequirements(Material.MANGROVE_TRAPDOOR,"§eKreis",10,(int) Math.ceil(instance.variables.time.get(player) / 2.0)));
-        inventory.setItem(4,instance.wandBuildingManager.createNameItemRequirements(Material.CHORUS_FLOWER,"§eWürfel",15,(int) Math.ceil(instance.variables.time.get(player) / 2.0)));
-        inventory.setItem(5,instance.wandBuildingManager.createNameItemRequirements(Material.HEART_OF_THE_SEA,"§eKugel",20,(int) Math.ceil(instance.variables.time.get(player) / 2.0)));
     }
 
     public void openMenu(Player player) {
@@ -43,16 +41,6 @@ public class DestructionEditor {
         if (slot == 3) {
             change(player, "Kreis");
             instance.variables.addExp(player,10);
-            instance.variables.addCooldown(player,(int) Math.ceil(instance.variables.time.get(player) / 2.0));
-        }
-        if (slot == 4) {
-            change(player, "Würfel");
-            instance.variables.addExp(player,15);
-            instance.variables.addCooldown(player,(int) Math.ceil(instance.variables.time.get(player) / 2.0));
-        }
-        if (slot == 5) {
-            change(player, "Kugel");
-            instance.variables.addExp(player,20);
             instance.variables.addCooldown(player,(int) Math.ceil(instance.variables.time.get(player) / 2.0));
         }
         instance.variables.confirmBuild(player);

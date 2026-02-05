@@ -1,13 +1,13 @@
-package org.cws.covensGame.listener;
+package org.cws.wandbuilder.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 public class InventoryClick implements Listener {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {

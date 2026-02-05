@@ -1,9 +1,9 @@
-package org.cws.covensGame.manager.createManager;
+package org.cws.wandbuilder.manager.createManager;
 
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Variables {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     public Map<Player, Integer> reqExp = new HashMap<>();
     public Map<Player, Integer> cooldown = new HashMap<>();
 

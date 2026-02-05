@@ -1,13 +1,13 @@
-package org.cws.covensGame.manager.createManager;
+package org.cws.wandbuilder.manager.createManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 public class Projectile {
-  CovensGame instance = CovensGame.getInstance();
+  WandbuilderMain instance = WandbuilderMain.getWandbuilder();
   private final String setProjectileName = "§6- Setze ein Projektil -";
   public final Inventory setProjectile = Bukkit.createInventory(null, 9, setProjectileName);
 

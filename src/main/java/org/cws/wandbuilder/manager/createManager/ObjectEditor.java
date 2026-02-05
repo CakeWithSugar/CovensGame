@@ -1,16 +1,16 @@
-package org.cws.covensGame.manager.createManager;
+package org.cws.wandbuilder.manager.createManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ObjectEditor {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
     private final String setObjectEditorName = "§6- Setze die Projektil Werte -";
     public final Inventory setObjectEditor = Bukkit.createInventory(null, 18, setObjectEditorName);
     public Map<Player, Integer> cost = new HashMap<>();

@@ -1,4 +1,4 @@
-package org.cws.covensGame.listener;
+package org.cws.wandbuilder.listener;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,10 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.cws.covensGame.CovensGame;
+import org.cws.wandbuilder.WandbuilderMain;
 
 public class PlayerInteract implements Listener {
-    CovensGame instance = CovensGame.getInstance();
+    WandbuilderMain instance = WandbuilderMain.getWandbuilder();
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {

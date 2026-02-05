@@ -1,4 +1,4 @@
-package org.cws.covensGame;
+package org.cws.wandbuilder;
 
 import org.bukkit.Particle;
 
@@ -15,6 +15,7 @@ public class BaseValues {
     public String momentaryNotation = "§aMomentan: §7";
 
 
+    public int recursionTicks = 10;
     public Particle basicParticle = Particle.FIREWORK;
     public int basicTime = 1;
     public double basicGravity = 0;

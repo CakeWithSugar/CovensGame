@@ -1,4 +1,4 @@
-package org.cws.covensGame.manager;
+package org.cws.wandbuilder.manager;
 
 import org.bukkit.inventory.ItemStack;
 
