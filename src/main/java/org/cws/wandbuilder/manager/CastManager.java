@@ -116,7 +116,7 @@ public class CastManager {
 
         int duration = time/2;
         double radius = speed*1.5;
-        taskId[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(main.plugin, () -> {
+        taskId[0] = Bukkit.getScheduler().scheduleSyncRepeatingTask(main, () -> {
             if (!projectile.isDead() || projectile.isValid()) {
                 return;
             }
@@ -139,7 +139,7 @@ public class CastManager {
             projectile.setGravity(false);
             return;
         }
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(wandbuilder, () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(main, () -> {
             if (!projectile.isValid() || projectile.isDead()) {
                 return;
             }
@@ -148,7 +148,7 @@ public class CastManager {
     }
 
     private void setTrail(Projectile projectile, List<Particle> particle){
-        Bukkit.getScheduler().runTaskTimer(wandbuilder, () -> {
+        Bukkit.getScheduler().runTaskTimer(main, () -> {
             if (projectile.isDead()) {
                 return;
             }
@@ -162,7 +162,7 @@ public class CastManager {
         if (time == 0) {
             time = wandbuilder.values.basicTime;
         }
-        Bukkit.getScheduler().runTaskTimer(wandbuilder, () -> {
+        Bukkit.getScheduler().runTaskTimer(main, () -> {
             if (projectile.isDead()) {
                 return;
             }
@@ -172,7 +172,7 @@ public class CastManager {
             }
         }, 0, 1);
 
-        Bukkit.getScheduler().runTaskLater(wandbuilder, () -> {
+        Bukkit.getScheduler().runTaskLater(main, () -> {
             if (projectile.isDead()) {
                 return;
             }
@@ -184,7 +184,7 @@ public class CastManager {
     private void setOnCooldown(Player player, int cooldownTime){
         if (cooldownTime != 0) {
             onCooldown.add(player);
-            Bukkit.getScheduler().runTaskLater(wandbuilder, () -> {
+            Bukkit.getScheduler().runTaskLater(main, () -> {
                 onCooldown.remove(player);
             }, 20L * cooldownTime);
         }
