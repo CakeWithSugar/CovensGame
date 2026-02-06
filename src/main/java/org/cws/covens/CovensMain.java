@@ -1,8 +1,8 @@
 package org.cws.covens;
 
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.cws.covens.executors.LevelingExecutor;
 import org.cws.covens.items.Karmisin;
 import org.cws.covens.listener.*;
 import org.cws.covens.manager.CovenAbilityOrganizer;
@@ -10,7 +10,8 @@ import org.cws.covens.manager.CovenChoseing;
 import org.cws.covens.manager.CovenItems;
 import org.cws.covens.manager.LevelingChard;
 
-import java.util.Objects;
+
+import static org.cws.MainGeneral.main;
 
 public final class CovensMain{
     public static CovensMain covens;
@@ -27,6 +28,12 @@ public final class CovensMain{
         setAbilities();
         setManager();
         setListener(server,plugin);
+    }
+
+    public void onDisable() {
+        for (Player player : main.getServer().getOnlinePlayers()) {
+            covens.values.setup(player, true);
+        }
     }
 
     private void setAbilities() {
@@ -48,6 +55,9 @@ public final class CovensMain{
         server.getPluginManager().registerEvents(new InventoryClicker(), plugin);
         server.getPluginManager().registerEvents(new Eat(), plugin);
         server.getPluginManager().registerEvents(new HitEntity(), plugin);
+        server.getPluginManager().registerEvents(new PlayerInteractor(), plugin);
+        server.getPluginManager().registerEvents(new ExpCollect(), plugin);
+
     }
 
     public static CovensMain getCovens(){
