@@ -11,6 +11,8 @@ public class CovenAbilityOrganizer {
         String coven = instance.values.coven.get(player);
         if (coven.equals(instance.karmisin.name)) {
             return instance.karmisin.passive(player);
+        } else if (coven.equals(instance.gamble.name)) {
+            return instance.gamble.passive(player);
         }
         return null;
     }
@@ -19,6 +21,8 @@ public class CovenAbilityOrganizer {
         String coven = instance.values.coven.get(player);
         if (coven.equals(instance.karmisin.name)) {
             return instance.karmisin.abb1(player);
+        } else if (coven.equals(instance.gamble.name)) {
+            return instance.gamble.abb1(player);
         }
         return null;
     }
@@ -27,6 +31,8 @@ public class CovenAbilityOrganizer {
         String coven = instance.values.coven.get(player);
         if (coven.equals(instance.karmisin.name)) {
             return instance.karmisin.abb2(player);
+        } else if (coven.equals(instance.gamble.name)) {
+            return instance.gamble.abb2(player);
         }
         return null;
     }
@@ -35,6 +41,8 @@ public class CovenAbilityOrganizer {
         String coven = instance.values.coven.get(player);
         if (coven.equals(instance.karmisin.name)) {
             return instance.karmisin.abb3(player);
+        } else if (coven.equals(instance.gamble.name)) {
+            return instance.gamble.abb3(player);
         }
         return null;
     }
@@ -43,6 +51,8 @@ public class CovenAbilityOrganizer {
         String coven = instance.values.coven.get(player);
         if (coven.equals(instance.karmisin.name)) {
             instance.karmisin.passiveAbility(player);
+        } else if (coven.equals(instance.gamble.name)) {
+            instance.gamble.passiveAbility(player);
         }
     }
 }

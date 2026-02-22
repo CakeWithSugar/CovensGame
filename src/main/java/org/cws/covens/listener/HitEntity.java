@@ -22,5 +22,13 @@ public class HitEntity implements Listener {
                 }
             }
         }
+        if (event.getEntity() instanceof Player player) {
+            if (instance.values.coven.get(player).equals(instance.gamble.name)) {
+                if (instance.gamble.abb1Ability(player)) {
+                    instance.gamble.particle(player.getLocation());
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
 }

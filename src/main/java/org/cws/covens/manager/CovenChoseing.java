@@ -20,6 +20,7 @@ public class CovenChoseing {
 
     private void createItems(Inventory inventory){
         inventory.setItem(10,instance.covenItems.createNameIteme(Material.REDSTONE_BLOCK,"§c"+instance.karmisin.name));
+        inventory.setItem(11,instance.covenItems.createNameIteme(Material.EMERALD,"§2"+instance.gamble.name));
     }
 
     public void openMenu(Player player) {
@@ -30,6 +31,10 @@ public class CovenChoseing {
     public void clickManager(int slot,Player player) {
         if (slot == 10) {
             instance.values.coven.put(player,instance.karmisin.name);
+            player.closeInventory();
+        }
+        if (slot == 11) {
+            instance.values.coven.put(player,instance.gamble.name);
             player.closeInventory();
         }
     }

@@ -1,12 +1,11 @@
 package org.cws.covens.listener;
 
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.cws.covens.CovensMain;
 
-public class Eat implements Listener {
+public class PlayerConsume implements Listener {
     private final CovensMain instance = CovensMain.getCovens();
 
     @EventHandler

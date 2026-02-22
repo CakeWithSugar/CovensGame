@@ -3,7 +3,8 @@ package org.cws.covens;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.cws.covens.items.Karmisin;
+import org.cws.covens.abilities.Gamble;
+import org.cws.covens.abilities.Karmisin;
 import org.cws.covens.listener.*;
 import org.cws.covens.manager.CovenAbilityOrganizer;
 import org.cws.covens.manager.CovenChoseing;
@@ -20,6 +21,8 @@ public final class CovensMain{
     public CovenChoseing covenChoseing;
 
     public Karmisin karmisin;
+    public Gamble gamble;
+
     public CovenAbilityOrganizer covenAbilityOrganizer;
     public LevelingChard levelingChard;
 
@@ -38,6 +41,7 @@ public final class CovensMain{
 
     private void setAbilities() {
         karmisin = new Karmisin();
+        gamble = new Gamble();
     }
 
     private void setManager() {
@@ -53,7 +57,7 @@ public final class CovensMain{
         server.getPluginManager().registerEvents(new PlayerLeave(), plugin);
         server.getPluginManager().registerEvents(new InventoryClose(), plugin);
         server.getPluginManager().registerEvents(new InventoryClicker(), plugin);
-        server.getPluginManager().registerEvents(new Eat(), plugin);
+        server.getPluginManager().registerEvents(new PlayerConsume(), plugin);
         server.getPluginManager().registerEvents(new HitEntity(), plugin);
         server.getPluginManager().registerEvents(new PlayerInteractor(), plugin);
         server.getPluginManager().registerEvents(new ExpCollect(), plugin);

@@ -1,4 +1,4 @@
-package org.cws.covens.items;
+package org.cws.covens.abilities;
 
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -11,19 +11,15 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import org.cws.covens.CovensMain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.cws.MainGeneral.main;
 
-public class Karmisin {
+public class Gamble {
     public final CovensMain instance = CovensMain.getCovens();
-    public final String name = "Haus des Karmesins";
-    public Map<Player,Entity> bats = new HashMap<>();
+    public final String name = "Hand des Glücks";
+    public Map<Player, Entity> bats = new HashMap<>();
     private Map<Player,Boolean> onCooldown = new HashMap<>();
-
 
     public ItemStack passive(Player player) {
         ItemStack item = new ItemStack(Material.REDSTONE_BLOCK);
@@ -45,22 +41,20 @@ public class Karmisin {
         return item;
     }
     public ItemStack abb1(Player player) {
-        ItemStack item = new ItemStack(Material.FERMENTED_SPIDER_EYE);
+        ItemStack item = new ItemStack(Material.PHANTOM_MEMBRANE);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName("§cBluthunger");
+            meta.setDisplayName("§2Zufallsschutz");
             List<String> lore = new ArrayList<>();
             lore.add("§8Passive Fähigkeit");
             if (instance.values.ability1Level.get(player) == -1) {
                 lore.add("§4[Fähigkeit nicht aktiviert]");
+                lore.add("§7");
+                lore.add("§7Zu einer Wahrscheinlichkeit von §d+" + (10) + "% §7wird Schaden welchen du erhälst, §eignoriert§7.");
             } else {
                 lore.add("§7Level: §b" + (instance.values.ability1Level.get(player)+1));
-            }
-            lore.add("§7");
-            if ((instance.values.ability1Level.get(player)+1) == 0) {
-                lore.add("§7Erhalte §d+" + (instance.values.ability1Level.get(player)+2) + " §eSättigung §7wenn du ein Lebewesen schlägst.");
-            } else {
-                lore.add("§7Erhalte §d+" + (instance.values.ability1Level.get(player) + 1) + " §eSättigung §7wenn du ein Lebewesen schlägst.");
+                lore.add("§7");
+                lore.add("§7Zu einer Wahrscheinlichkeit von §d+" + ((instance.values.ability1Level.get(player)*2)+10) + "% §7wird Schaden welchen du erhälst, §eignoriert§7.");
             }
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -124,9 +118,8 @@ public class Karmisin {
         return item;
     }
 
-    private void particle(Location location) {
-        location.getWorld().spawnParticle(Particle.CRIMSON_SPORE,location,10);
-        instance.values.playColorParticle("RED",location,1.0,10,1,1.0f);
+    public void particle(Location location) {
+        instance.values.playColorParticle("GREEN",location,1.0,5,1,1.0f);
     }
 
     //Abilities
@@ -148,20 +141,15 @@ public class Karmisin {
         },0,100);
     }
 
-    public void abb1Ability(Player player) {
+    public boolean abb1Ability(Player player) {
         int abbLevel = instance.values.ability1Level.get(player);
         if (abbLevel == -1) {
-            return;
+            return false;
         } else {
             abbLevel = abbLevel+1;
         }
-        if (player.getFoodLevel() < 20) {
-            player.setSaturation(player.getSaturation() + 1);
-            player.setFoodLevel(player.getFoodLevel() + abbLevel);
-            particle(player.getLocation());
-            player.playSound(player, Sound.ENTITY_PHANTOM_BITE,0.5f, 2.0f);
-            player.playSound(player, Sound.ITEM_HONEY_BOTTLE_DRINK,0.5f, 0.75f);
-        }
+        int random = new Random().nextInt(100);
+        return random < (10 + (abbLevel * 2));
     }
 
     public void abb2Ability(Player player) {
